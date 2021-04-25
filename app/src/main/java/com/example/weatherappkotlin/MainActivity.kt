@@ -9,21 +9,18 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import org.json.JSONObject
-import org.w3c.dom.Text
 import java.lang.Exception
 import java.net.URL
-import java.nio.charset.Charset
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.logging.SimpleFormatter
 
 class MainActivity : AppCompatActivity() {
 
     val CITY: String = "DaNang"
-    val API1day: String =
-        "https://api.openweathermap.org/data/2.5/weather?q=$CITY&lang=vi&units=metric&appid=a6f41d947e0542a26580bcd5c3fb90ef"
-    val API: String = "a6f41d947e0542a26580bcd5c3fb90ef"
+    val API: String =
+        "https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=a6f41d947e0542a26580bcd5c3fb90ef"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
@@ -43,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             var response: String?
             try {
                 response =
-                    URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&lang=vi&units=metric&appid=a6f41d947e0542a26580bcd5c3fb90ef").readText(
+                    URL("$API").readText(
                         Charsets.UTF_8
                     )
             } catch (e: Exception) {
@@ -66,25 +63,27 @@ class MainActivity : AppCompatActivity() {
                         Date(updateAt * 1000)
                     )
                 val temp = main.getString("temp") + "°C"
-                val tempMin = "Min temp: " + main.getString("temp_min" + "°C")
-                val tempMax = "Max temp: " + main.getString("temp_max" + "°C")
+                val tempMin = "Min temp: " + main.getString("temp_min") + "°C"
+                val tempMax = "Max temp: " + main.getString("temp_max") + "°C"
                 val pressure = main.getString("pressure")
-                val huminity = main.getString("huminity")
-                val sunsrise: Long = sys.getLong("sunrise")
+                val humidity = main.getString("humidity")
+                val sunrise: Long = sys.getLong("sunrise")
                 val sunset: Long = sys.getLong("sunset")
                 val windSpeed = wind.getString("speed")
                 val weatherDescription = weather.getString("description")
-                val andress = jsonObj.getString("name") + "," + sys.getString("country")
+                val address = jsonObj.getString("name") + ", " + sys.getString("country")
 
-                findViewById<TextView>(R.id.andressTxt).text = andress
+                findViewById<TextView>(R.id.andressTxt).text = address
                 findViewById<TextView>(R.id.update_at).text = updateAtText
+                findViewById<TextView>(R.id.wind).text = windSpeed
+                findViewById<TextView>(R.id.pressure).text = pressure
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
                 findViewById<TextView>(R.id.temp).text = temp
                 findViewById<TextView>(R.id.tempMin).text = tempMin
                 findViewById<TextView>(R.id.tempMax).text = tempMax
-                findViewById<TextView>(R.id.humidity).text = huminity
+                findViewById<TextView>(R.id.humidity).text = humidity
                 findViewById<TextView>(R.id.sunrise).text =
-                    SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunsrise * 1000))
+                    SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunrise * 1000))
                 findViewById<TextView>(R.id.sunset).text =
                     SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunset * 1000))
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
