@@ -329,13 +329,15 @@
                         android:layout_height="5dp" />
 
                     <TextView
+                        android:id="@+id/lon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Create"
                         android:textColor="@color/white" />
 
                     <TextView
-                        android:id="@+id/info"
+
+                        android:id="@+id/lat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Thanh Tú"
@@ -363,10 +365,10 @@
         android:visibility="gone" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/errortext"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Something went wrong" />
+        android:layout_centerInParent="true"
+        android:text="Something went wrong"
+        android:visibility="gone" />
 </RelativeLayout>
